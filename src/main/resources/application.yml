@@ -26,6 +26,9 @@ spring:
       ddl-auto: create
   h2.console.enables: false
   sql.init.mode: always
+  data.rest:
+    base-path: /api
+    detection-strategy: annotated
 
 ---
 spring:
