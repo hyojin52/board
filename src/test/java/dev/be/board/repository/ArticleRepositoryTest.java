@@ -31,7 +31,7 @@ class ArticleRepositoryTest {
     // Then
     assertThat(articles)
             .isNotNull()
-            .hasSize(26);
+            .hasSize(123);
   }
   
   @DisplayName("insert 테스트")
