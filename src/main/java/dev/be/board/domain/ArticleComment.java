@@ -27,6 +27,11 @@ public class ArticleComment extends AuditingFields {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
+  @Setter
+  @JoinColumn(name = "userId")
+  @ManyToOne(optional = false)
+  private UserAccount userAccount; // 유저 정보 (ID)
+  
   /** 게시글(id) */
   @Setter
   @ManyToOne(optional = false)
@@ -39,13 +44,14 @@ public class ArticleComment extends AuditingFields {
   
   protected ArticleComment () {}
   
-  public ArticleComment(Article article, String content) {
+  public ArticleComment(UserAccount userAccount, Article article, String content) {
+    this.userAccount = userAccount;
     this.article = article;
     this.content = content;
   }
   
-  public static ArticleComment of(Article article, String content) {
-    return new ArticleComment(article, content);
+  public static ArticleComment of(UserAccount userAccount, Article article, String content) {
+    return new ArticleComment(userAccount, article, content);
   }
   
   @Override
