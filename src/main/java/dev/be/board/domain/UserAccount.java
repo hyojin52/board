@@ -1,10 +1,10 @@
 package dev.be.board.domain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -17,7 +17,11 @@ import java.util.Objects;
 @Entity
 public class UserAccount extends AuditingFields {
   @Id
-  @Column(length = 50)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  
+  @Setter
+  @Column(nullable = false, length = 50)
   private String userId;
   
   @Setter

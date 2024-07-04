@@ -17,7 +17,7 @@ public class ArticleCommentService {
   private final ArticleCommentRepository articleCommentRepository;
   
   
-  public List<ArticleCommentDto> searchArticleComment(Long articleId) {
+  public List<ArticleCommentDto> searchArticleComments(Long articleId) {
     return List.of();
   }
   
@@ -25,7 +25,7 @@ public class ArticleCommentService {
   
   }
   
-  public void updateArticleComment(long articleCommentId, ArticleCommentUpdateDto dto) {
+  public void updateArticleComment(ArticleCommentDto dto) {
   
   }
   
