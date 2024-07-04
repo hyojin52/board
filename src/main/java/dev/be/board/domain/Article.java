@@ -32,7 +32,7 @@ public class Article extends AuditingFields {
   
   /** 유저 정보 (ID) */
   @Setter
-  @JoinColumn(name = "userId")
+  @JoinColumn(name = "user_account_id")
   @ManyToOne(optional = false)
   private UserAccount userAccount;
   
