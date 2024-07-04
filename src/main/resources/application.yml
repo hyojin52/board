@@ -24,6 +24,7 @@ spring:
       hibernate.default_batch_fetch_size: 100 # ?? ??? ??
     hibernate:
       ddl-auto: create
+    open-in-view: false
   h2.console.enables: false
   sql.init.mode: always
   data.rest:
