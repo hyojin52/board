@@ -2,6 +2,7 @@ package dev.be.board.repository;
 
 import dev.be.board.config.JpaConfig;
 import dev.be.board.domain.Article;
+import dev.be.board.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ class ArticleRepositoryTest {
   public void givenTestData_whenInserting_thenWorksFine() {
     // Given
     long prevCount = articleRepository.count();
-    Article article = Article.of("new article", "new content", "#hashtag");
+    Article article = Article.of(createUserAccount(), "new article", "new content", "#hashtag");
     
     // When
     articleRepository.save(article);
@@ -77,5 +78,15 @@ class ArticleRepositoryTest {
     
     // Then
     assertEquals(articleRepository.count(), prevCount - 1);
+  }
+  
+  private UserAccount createUserAccount() {
+    return UserAccount.of(
+            "uno",
+            "password",
+            "uno@email.com",
+            "Uno",
+            null
+    );
   }
 }
