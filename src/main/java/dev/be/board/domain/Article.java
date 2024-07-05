@@ -1,6 +1,5 @@
 package dev.be.board.domain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -30,6 +30,12 @@ public class Article extends AuditingFields {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
+  /** 유저 정보 (ID) */
+  @Setter
+  @JoinColumn(name = "user_account_id")
+  @ManyToOne(optional = false)
+  private UserAccount userAccount;
+  
   /** 제목 */
   @Setter
   @Column(nullable = false)
@@ -45,20 +51,21 @@ public class Article extends AuditingFields {
   private String hashtag;
   
   @ToString.Exclude
-  @OrderBy("id")
+  @OrderBy("createdAt DESC")
   @OneToMany(mappedBy = "article", cascade = {CascadeType.ALL})
   private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
   
   protected Article () {}
   
-  public Article(String title, String content, String hashtag) {
+  public Article(UserAccount userAccount, String title, String content, String hashtag) {
+    this.userAccount = userAccount;
     this.title = title;
     this.content = content;
     this.hashtag = hashtag;
   }
   
-  public static Article of (String title, String content, String hashtag) {
-    return new Article(title, content, hashtag);
+  public static Article of (UserAccount userAccount, String title, String content, String hashtag) {
+    return new Article(userAccount, title, content, hashtag);
   }
   
   @Override

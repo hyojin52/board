@@ -1,6 +1,5 @@
 package dev.be.board.domain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -27,6 +27,11 @@ public class ArticleComment extends AuditingFields {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
+  @Setter
+  @JoinColumn(name = "user_account_id")
+  @ManyToOne(optional = false)
+  private UserAccount userAccount; // 유저 정보 (ID)
+  
   /** 게시글(id) */
   @Setter
   @ManyToOne(optional = false)
@@ -39,13 +44,14 @@ public class ArticleComment extends AuditingFields {
   
   protected ArticleComment () {}
   
-  public ArticleComment(Article article, String content) {
+  public ArticleComment(UserAccount userAccount, Article article, String content) {
+    this.userAccount = userAccount;
     this.article = article;
     this.content = content;
   }
   
-  public static ArticleComment of(Article article, String content) {
-    return new ArticleComment(article, content);
+  public static ArticleComment of(UserAccount userAccount, Article article, String content) {
+    return new ArticleComment(userAccount, article, content);
   }
   
   @Override
